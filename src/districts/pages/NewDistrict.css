@@ -1,0 +1,46 @@
+.homepage-background{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: lightblue; 
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+  align-items: center;
+}
+
+.homepage-background h1 {
+  font-size: 4rem;
+  margin-bottom: 20px;
+}
+
+.homepage-background input {
+  size-adjust: 4rem;
+  margin-bottom: 10px; 
+}
+
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+.place-form {
+  list-style: none;
+  margin-top: 10vh;  /* Add this line to move the form up */
+  padding: 1rem;
+  width: 90%;
+  max-width: 40rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  border-radius: 6px;
+  background: rgb(193, 193, 193);
+}
+
+
+.new-district-page {
+  background-color: #5a648d; /* Replace with your desired color */
+  min-height: 100vh;
+}
