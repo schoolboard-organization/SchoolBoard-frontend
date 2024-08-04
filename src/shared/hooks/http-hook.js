@@ -5,7 +5,6 @@ import { useState, useCallback, useRef, useEffect } from "react";
  * as well as request cancellation if a page is changes during a request
  */
 export const useHttpClient = () => {
-  console.log("IN HTTP CLIENT");
   /*
    * states for loading and error status
    */
@@ -23,7 +22,6 @@ export const useHttpClient = () => {
    */
   const sendRequest = useCallback(
     async (url, method = "GET", body = null, headers = {}) => {
-      console.log("GOT INTO SEND REQ");
       setIsLoading(true);
 
       // create abort controller to keep track of all http requests
@@ -31,7 +29,6 @@ export const useHttpClient = () => {
       activeHttpRequest.current.push(httpAbortController);
 
       try {
-        console.log("url: " + url);
         // fetch using passes in parameters
         const response = await fetch(url, {
           method,
@@ -40,16 +37,12 @@ export const useHttpClient = () => {
           signal: httpAbortController.signal,
         });
 
-        console.log("Does it get to here?");
-        console.log("RESPONSE:" + JSON.stringify(response));
         let responseData;
         try {
           responseData = await response.json(); // turn response into JSON /////////////////////////////////////
         } catch (err) {
           console.log(err);
         }
-
-        console.log("GOT PAST AWAIT");
 
         // delete most recently completed http response
         activeHttpRequest.current = activeHttpRequest.current.filter(
