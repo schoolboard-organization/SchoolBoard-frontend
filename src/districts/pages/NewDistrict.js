@@ -64,7 +64,7 @@ function NewDistrict() {
             {isLoading && <LoadingSpinner asOverlay />}
 
             <h2>Create District</h2>
-            {/* image upload for a new place */}
+            {/* image upload for a new place ALW Test! */}
             {/* <ImageUpload
           center
           id="image"
