@@ -7,8 +7,8 @@ import "./NewDistrict.css";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
+import { useNavigate } from "react-router-dom";
 // import { AuthContext } from "../../shared/context/auth-context";
-// import { useHistory } from "react-router-dom";
 // import ImageUpload from "../../shared/components/FormElements/ImageUpload";
 
 /**
@@ -22,7 +22,7 @@ function NewDistrict() {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   // custom use form hook, tracks validity of districtName and districtNumber
-  const [formState, inputHandler] = useForm(
+  const [formState, inputHandler, setFormData] = useForm(
     {
       districtName: { value: "", isValid: false },
       districtNumber: { value: "", isValid: false },
@@ -31,7 +31,7 @@ function NewDistrict() {
   );
 
   // used to reroute after new place has been created
-  // const history = useHistory();
+  const navigate = useNavigate();
 
   // handles submitting a new place to the backend
   const districtSubmitHandler = async (event) => {
@@ -51,7 +51,17 @@ function NewDistrict() {
         }
       );
 
-      // history.push("/"); // re-routes user to main page
+      navigate("/allDistricts"); // re-routes user to main page
+      // Reset the form after successful submission
+      setFormData(
+        {
+          districtName: { value: "", isValid: false },
+          districtNumber: { value: "", isValid: false },
+        },
+        false
+      );
+
+      console.log();
     } catch (err) {}
   };
 
