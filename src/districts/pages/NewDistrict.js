@@ -22,10 +22,11 @@ function NewDistrict() {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   // custom use form hook, tracks validity of districtName and districtNumber
-  const [formState, inputHandler, setFormData] = useForm(
+  const [formState, inputHandler] = useForm(
     {
       districtName: { value: "", isValid: false },
       districtNumber: { value: "", isValid: false },
+      districtZipCode: { value: "", isValid: false },
     },
     false
   );
@@ -39,12 +40,15 @@ function NewDistrict() {
 
     // logic for submitting a new place to the DB
     try {
+      console.log("ABOUT TO POST TO DB");
+
       await sendRequest(
-        `${process.env.REACT_APP_BACKEND_URL}/district`,
+        `${process.env.REACT_APP_BACKEND_URL}/district/`,
         "POST",
         JSON.stringify({
           districtName: formState.inputs.districtName.value,
           districtNumber: formState.inputs.districtNumber.value,
+          districtZipCode: formState.inputs.districtZipCode.value,
         }),
         {
           "Content-Type": "application/json", // declares type to be JSON
@@ -52,14 +56,6 @@ function NewDistrict() {
       );
 
       navigate("/allDistricts"); // re-routes user to main page
-      // Reset the form after successful submission
-      setFormData(
-        {
-          districtName: { value: "", isValid: false },
-          districtNumber: { value: "", isValid: false },
-        },
-        false
-      );
 
       console.log();
     } catch (err) {}
@@ -74,15 +70,8 @@ function NewDistrict() {
             {isLoading && <LoadingSpinner asOverlay />}
 
             <h2>Create District</h2>
-            {/* image upload for a new place ALW Test! */}
-            {/* <ImageUpload
-          center
-          id="image"
-          onInput={inputHandler}
-          error="Please upload an image."
-        /> */}
 
-            {/* title input box */}
+            {/* district name input box */}
             <Input
               id="districtName"
               element="input"
@@ -93,13 +82,23 @@ function NewDistrict() {
               onInput={inputHandler}
             />
 
-            {/* description input box */}
+            {/* district number input box */}
             <Input
               id="districtNumber"
               element="input"
               label="District Number"
               validators={[VALIDATOR_REQUIRE()]}
               errorText="Please Enter A District Number"
+              onInput={inputHandler}
+            />
+
+            {/* district zip code input box */}
+            <Input
+              id="districtZipCode"
+              element="input"
+              label="District Zip Code"
+              validators={[VALIDATOR_REQUIRE()]}
+              errorText="Please Enter A Zip Code"
               onInput={inputHandler}
             />
 

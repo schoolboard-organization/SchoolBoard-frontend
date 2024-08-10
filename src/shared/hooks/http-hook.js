@@ -58,8 +58,14 @@ export const useHttpClient = () => {
         setIsLoading(false); // set loading state to false since all action have been done
         return responseData; // return what the fetch gave us
       } catch (err) {
-        setError(err.message);
-        console.log("Error Message: " + err.message);
+        if (err.name === "AbortError") {
+          console.log("Request was aborted");
+        } else {
+          setError(err.message);
+          console.log(
+            "ERROR CODE IN HTTP-HOOK - Error Message: " + err.message
+          );
+        }
         setIsLoading(false);
         throw err;
       }

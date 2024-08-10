@@ -1,0 +1,101 @@
+/* General body styling */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #7a7a7a; /* Grey background color */
+  }
+  
+  /* Centering the content */
+  .center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  
+  /* Styling for the main container */
+  .main-container {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  /* Header styling */
+  .main-container h2 {
+    font-size: 36px;
+    color: #ffffff;
+    margin-bottom: 20px;
+  }
+  
+  /* Styling for the input field and button */
+  .search-bar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .search-bar input {
+    width: 300px;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  .search-bar button {
+    background-color: #f4b400; /* Yellow color for the button */
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin-left: 10px;
+    cursor: pointer;
+  }
+  
+  .search-bar button img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .district-container {
+    max-height: 400px; /* Adjust this value as needed */
+    overflow-y: auto;  /* Enable vertical scrolling */
+    border: 1px solid #ccc; /* Optional: add a border */
+    padding: 2px; /* Optional: add some padding */
+    width: 50%; /* Adjust this value to control the width */
+    max-width: 900px; /* Optional: set a maximum width */
+    margin: 0 auto; /* Center the container horizontally */
+    box-sizing: border-box; /* Ensure padding and border are included in the width */
+  }
+  
+  /* Styling for the district list */
+  .district-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the list items horizontally */
+  }
+  
+  .district-list li {
+    list-style-type: none; /* Remove bullets from list items */
+    background-color: #f4b400; /* Yellow background for district items */
+    color: black;
+    margin: 10px 0; /* Space between items */
+    padding: 15px;
+    font-size: 25px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    max-width: 500px; /* Set max width for the bars */
+    width: 100%; /* Make sure items fill the container width */
+    box-sizing: border-box; /* Include padding and border in the width */
+  }
+  
+  .district-list li:hover {
+    background-color: #f49a00; /* Darker yellow on hover */
+  }
+  
+  /* Additional styling for empty state */
+  .empty-state {
+    color: white;
+    font-size: 18px;
+    margin-top: 20px;
+  }
+  

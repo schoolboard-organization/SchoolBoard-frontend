@@ -38,8 +38,8 @@ const Input = (props) => {
   const { value, isValid } = inputState;
 
   useEffect(() => {
-    props.onInput(id, value, isValid);
-  }, [id, value, isValid, onInput, props]); // check if anything in props (id, value) changes or anything in the state (isValid, onInput) changes
+    onInput(id, value, isValid);
+  }, [id, value, isValid, onInput]); // check if anything in props (id, value) changes or anything in the state (isValid, onInput) changes
 
   // sets val & validators to given values AND set type to CHANGE
   const changeHandler = (event) => {
