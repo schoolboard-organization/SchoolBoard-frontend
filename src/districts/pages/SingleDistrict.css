@@ -1,0 +1,33 @@
+.single-district {
+    background-color: #f49a00; /* Yellow background */
+    padding: 20px;
+    border-radius: 8px;
+    margin: 10px 0;
+    text-align: center;
+    display: flex;
+    justify-content: center; /* Horizontally center the content */
+    align-items: center; /* Vertically center the content */
+    height: 100px; /* Set a fixed height to make sure it looks uniform */
+}
+
+.single-district:hover {
+    background-color: #e68a00; /* Slightly darker yellow on hover */
+}
+
+.single-district a{
+    text-decoration: none;
+    color: inherit
+}
+
+.single-district-name {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.board-members {
+    font-size: 16px;
+    color: #d3d3d3; /* Light grey for board members text */
+}
+

@@ -58,7 +58,6 @@ body {
   .district-container {
     max-height: 400px; /* Adjust this value as needed */
     overflow-y: auto;  /* Enable vertical scrolling */
-    border: 1px solid #ccc; /* Optional: add a border */
     padding: 2px; /* Optional: add some padding */
     width: 50%; /* Adjust this value to control the width */
     max-width: 900px; /* Optional: set a maximum width */

@@ -15,9 +15,6 @@ import { useNavigate } from "react-router-dom";
  * @description Component for adding a new district into the database
  */
 function NewDistrict() {
-  // auth object
-  // const auth = useContext(AuthContext);
-
   // custom hook
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
@@ -40,10 +37,9 @@ function NewDistrict() {
 
     // logic for submitting a new place to the DB
     try {
-      console.log("ABOUT TO POST TO DB");
-
-      await sendRequest(
-        `${process.env.REACT_APP_BACKEND_URL}/district/`,
+      console.log("INSIDE TRY FOR POST");
+      const newDistrict = await sendRequest(
+        `${process.env.REACT_APP_BACKEND_URL}/district`,
         "POST",
         JSON.stringify({
           districtName: formState.inputs.districtName.value,
@@ -54,11 +50,12 @@ function NewDistrict() {
           "Content-Type": "application/json", // declares type to be JSON
         }
       );
-
-      navigate("/allDistricts"); // re-routes user to main page
-
-      console.log();
-    } catch (err) {}
+      console.log("SUCCESSFUL POST");
+      navigate("/home"); // re-routes user to main page
+      console.log(newDistrict);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (

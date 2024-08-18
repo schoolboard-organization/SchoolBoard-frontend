@@ -3,27 +3,38 @@ import "./HomePage.css";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
+import SingleDistrict from "./SingleDistrict";
+
+/**
+ * HomePage component displays all districts to the user
+ * @returns {JSX.Element} - Displays a search bar along with all district currently in the DB
+ */
 const HomePage = () => {
+  // custom hook to handle http requests
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
+
+  // state to keep track of all of the districts to be displayed on the page
   const [allDistricts, setDistricts] = useState([]);
 
+  // uses custom hooke and useEffect to handle GET request to receive all districts
   useEffect(() => {
     const fetchAllDistricts = async () => {
       try {
         const responseAllDistricts = await sendRequest(
-          `http://schoolboard-backend-brd9b8gbdmcjbqaa.eastus-01.azurewebsites.net/api/district/all`
+          `${process.env.REACT_APP_BACKEND_URL}/district/all`
         );
-
-        setDistricts(responseAllDistricts.allDistricts);
+        setDistricts(responseAllDistricts.allDistricts); // sets districts to be the districts retrieved from backend
         console.log("GET ALL DISTRICTS SUCCESSFUL");
-      } catch (err) {}
+      } catch (err) {
+        console.log("UNSUCCESSFUL GET FOR ALL DISTRICTS ");
+      }
     };
-
     fetchAllDistricts();
   }, [sendRequest]);
 
   return (
     <div className="main-container">
+      {/* Main header and search bar */}
       <h2>MySchoolBoard</h2>
       <div className="search-bar">
         <input type="text" placeholder="Address/Zip" />
@@ -31,27 +42,34 @@ const HomePage = () => {
           <img src="/search-icon.png" alt="Search" />
         </button>
       </div>
+
+      {/* Error modal if error is encountered */}
       <ErrorModal error={error} onClear={clearError} />
+
+      {/* If page is loading, show loading spinnter */}
       {isLoading && (
         <div className="center">
           <LoadingSpinner />
         </div>
       )}
 
+      {/* If page is not loading and at least one district is present, list off district(s) */}
       {!isLoading && allDistricts.length > 0 && (
         <div className="district-container">
           <ul className="district-list">
             {allDistricts.map((district) => (
-              <li key={district._id}>
-                {district.districtName} (District #: {district.districtNumber})
-              </li>
+              <SingleDistrict
+                key={district._id}
+                districtNumber={district.districtNumber}
+                districtName={district.districtName}
+              ></SingleDistrict>
             ))}
           </ul>
         </div>
       )}
-      {!isLoading && allDistricts.length === 0 && (
-        <p className="empty-state">No districts found.</p>
-      )}
+
+      {/* If page isn't loading but there are no districts, also show loading spinner (forever) */}
+      {!isLoading && allDistricts.length === 0 && <LoadingSpinner />}
     </div>
   );
 };
