@@ -69,7 +69,13 @@ const HomePage = () => {
       )}
 
       {/* If page isn't loading but there are no districts, also show loading spinner (forever) */}
-      {!isLoading && allDistricts.length === 0 && <LoadingSpinner />}
+      {!isLoading && allDistricts.length === 0 && (
+        <div>
+          {" "}
+          <p>NO DISTRICTS </p>
+          <LoadingSpinner />
+        </div>
+      )}
     </div>
   );
 };
