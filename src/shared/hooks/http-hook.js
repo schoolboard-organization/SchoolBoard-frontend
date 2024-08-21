@@ -60,6 +60,7 @@ export const useHttpClient = () => {
       } catch (err) {
         if (err.name === "AbortError") {
           console.log("Request was aborted");
+          console.log("Aborted request sometimes gets fixed if you just wait.");
         } else {
           setError(err.message);
           console.log(
