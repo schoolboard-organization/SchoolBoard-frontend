@@ -20,6 +20,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchAllDistricts = async () => {
       try {
+        console.log(`${process.env.REACT_APP_BACKEND_URL}/district/all`);
         const responseAllDistricts = await sendRequest(
           `${process.env.REACT_APP_BACKEND_URL}/district/all`
         );
