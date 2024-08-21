@@ -24,7 +24,7 @@ const BoardMemberList = (props) => {
       }
     };
     fetchAllBoardMembers();
-  }, [sendRequest]);
+  }, [sendRequest, props.districtNumber]);
 
   return (
     <div className="main-container">
