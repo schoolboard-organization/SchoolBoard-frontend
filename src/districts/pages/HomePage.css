@@ -1,8 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 /* General body styling */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #7a7a7a; /* Grey background color */
   }
   
   /* Centering the content */
@@ -22,18 +26,19 @@ body {
   /* Header styling */
   .main-container h2 {
     font-size: 36px;
-    color: #ffffff;
+    color: oklch(var(--pc));
     margin-bottom: 20px;
   }
   
   /* Styling for the input field and button */
-  .search-bar {
+  .input-box {
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
   }
   
   .search-bar input {
+    color: oklch(var(--b2));
     width: 300px;
     padding: 10px;
     font-size: 16px;
@@ -42,7 +47,7 @@ body {
   }
   
   .search-bar button {
-    background-color: #f4b400; /* Yellow color for the button */
+    background-color: oklch(var(--sc)); /* Yellow color for the button */
     border: none;
     border-radius: 5px;
     padding: 10px 20px;
@@ -74,7 +79,7 @@ body {
   
   .district-list li {
     list-style-type: none; /* Remove bullets from list items */
-    background-color: #f4b400; /* Yellow background for district items */
+    background-color: oklch(var(--s)); /* Yellow background for district items */
     color: black;
     margin: 10px 0; /* Space between items */
     padding: 15px;
@@ -88,7 +93,7 @@ body {
   }
   
   .district-list li:hover {
-    background-color: #f49a00; /* Darker yellow on hover */
+    background-color: oklch(var(--a)); /* Darker yellow on hover */
   }
   
   /* Additional styling for empty state */
@@ -97,4 +102,5 @@ body {
     font-size: 18px;
     margin-top: 20px;
   }
+
   

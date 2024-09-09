@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.toggle-button{
+    display: flex;
+    justify-content: center;
+}
+
+.toggle-button p{
+    font-weight: bolder;
+}
+
+.form-control{
+    height: 50%;
+}
+

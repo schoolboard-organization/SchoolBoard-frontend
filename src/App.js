@@ -1,19 +1,12 @@
 import "./App.css";
 import React from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import NewDistrict from "./districts/pages/NewDistrict";
-import HomePage from "./districts/pages/HomePage";
-import DistrictHome from "./districts/pages/DistrictHome";
+import { BrowserRouter } from "react-router-dom";
+import AnimatedRoutes from "./AnimatedRoutes";
 function App() {
   return (
     <BrowserRouter>
       <main>
-        <Routes>
-          <Route path="/newDistrict" element={<NewDistrict />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/district/:districtNumber" element={<DistrictHome />} />
-          <Route path="*" element={<Navigate to="/home" />} />
-        </Routes>
+        <AnimatedRoutes />
       </main>
     </BrowserRouter>
   );
