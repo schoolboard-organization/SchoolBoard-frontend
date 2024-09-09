@@ -1,5 +1,4 @@
 import React from "react";
-import { div } from "framer-motion/client";
 function SecondStepForm(props) {
   return (
     <div
@@ -14,7 +13,7 @@ function SecondStepForm(props) {
           <div className="mt-4">
             <input
               type="text"
-              placeholder={` ${props.text}`}
+              placeholder={`${props.placeHolderText}`}
               className="input input-bordered"
               required
             />

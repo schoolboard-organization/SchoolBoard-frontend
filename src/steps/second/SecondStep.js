@@ -1,13 +1,8 @@
-import React, { useState } from "react";
-import SecondStepAnimatedWords from "./SecondStepAnimatedWords";
+import React from "react";
 import SecondStepForm from "./SecondStepForm";
-import SecondStepCard from "./SecondStepCard";
 import { motion } from "framer-motion";
 import "./SecondStep.css";
-import { div } from "framer-motion/client";
-const SecondStep = (props) => {
-  const [textColor, setTextColor] = useState("oklch(var(--p))");
-  const [loginState, setLoginState] = useState(true);
+const SecondStep = () => {
   return (
     <motion.div
       className="entire-page bg-neutral-content"
@@ -25,13 +20,14 @@ const SecondStep = (props) => {
         >
           <SecondStepForm
             className="mr-16"
-            text={"ZIP Code"}
+            text="ZIP Code"
+            placeHolderText={"12345"}
             theme="bumblebee"
           />
           <div className="divider divider-primary lg:divider-horizontal font-bold mx-8">
             OR
           </div>
-          <SecondStepForm text="Address" />
+          <SecondStepForm placeHolderText="123 Street, City" text="Address" />
         </div>
       </React.Fragment>
     </motion.div>

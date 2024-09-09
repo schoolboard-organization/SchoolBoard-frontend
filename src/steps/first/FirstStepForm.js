@@ -65,9 +65,9 @@ const FirstStepForm = (props) => {
         />
         {/* ========== Forgot password button ========== */}
         <label className="label">
-          <a href="#" className="label-text-alt link link-hover">
-            Forgot password?
-          </a>
+          <Link to="/second" className="label-text-alt link link-hover">
+            Forgot Password?
+          </Link>
         </label>
       </div>
       {/* ========== Login / Sign Up Buttons ========== */}

@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Navigate,
-  useLocation,
-} from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import NewDistrict from "./districts/pages/NewDistrict";
 import HomePage from "./districts/pages/HomePage";
 import DistrictHome from "./districts/pages/DistrictHome";
