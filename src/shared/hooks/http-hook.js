@@ -60,7 +60,9 @@ export const useHttpClient = () => {
       } catch (err) {
         if (err.name === "AbortError") {
           console.log("Request was aborted");
-          console.log("Aborted request sometimes gets fixed if you just wait.");
+          console.log(
+            "NOTE: Aborted request sometimes gets fixed if you just wait."
+          );
         } else {
           setError(err.message);
           console.log(
@@ -89,5 +91,5 @@ export const useHttpClient = () => {
       activeHttpRequest.current.forEach((abortControl) => abortControl.abort());
     };
   }, []);
-  return { isLoading, error, sendRequest, clearError };
+  return { isLoading, error, sendRequest, clearError, setError };
 };

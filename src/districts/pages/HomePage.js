@@ -4,6 +4,7 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import SingleDistrict from "./SingleDistrict";
+import { motion } from "framer-motion";
 
 /**
  * HomePage component displays all districts to the user
@@ -20,64 +21,64 @@ const HomePage = () => {
   useEffect(() => {
     const fetchAllDistricts = async () => {
       try {
-        console.log(`${process.env.REACT_APP_BACKEND_URL}/district/all`);
         const responseAllDistricts = await sendRequest(
           `${process.env.REACT_APP_BACKEND_URL}/district/all`
         );
         setDistricts(responseAllDistricts.allDistricts); // sets districts to be the districts retrieved from backend
         console.log("GET ALL DISTRICTS SUCCESSFUL");
       } catch (err) {
-        console.log("UNSUCCESSFUL GET FOR ALL DISTRICTS ");
+        console.log("Error in catch block in fetchAllDistricts");
       }
     };
     fetchAllDistricts();
   }, [sendRequest]);
 
   return (
-    <div className="main-container">
-      {/* Main header and search bar */}
-      <h2>MySchoolBoard</h2>
-      <div className="search-bar">
-        <input type="text" placeholder="Address/Zip" />
-        <button>
-          <img src="/search-icon.png" alt="Search" />
-        </button>
-      </div>
+    <html data-theme="bumblebee">
+      <motion.div
+        className="main-container"
+        initial={{ opacity: 1 }}
+        animate={{ opacity: 1, transition: { duration: 1 } }}
+        exit={{ opacity: 0, transition: { duration: 1.5 } }}
+      >
+        {/* Main header and search bar */}
+        <h2>MySchoolBoard</h2>
 
-      {/* Error modal if error is encountered */}
-      <ErrorModal error={error} onClear={clearError} />
+        {/* Error modal if error is encountered */}
+        <ErrorModal error={error} onClear={clearError} />
 
-      {/* If page is loading, show loading spinnter */}
-      {isLoading && (
-        <div className="center">
-          <LoadingSpinner />
-        </div>
-      )}
+        {/* If page is loading, show loading spinnter */}
+        {isLoading && (
+          <div className="center">
+            <LoadingSpinner />
+          </div>
+        )}
 
-      {/* If page is not loading and at least one district is present, list off district(s) */}
-      {!isLoading && allDistricts.length > 0 && (
-        <div className="district-container">
-          <ul className="district-list">
-            {allDistricts.map((district) => (
-              <SingleDistrict
-                key={district._id}
-                districtNumber={district.districtNumber}
-                districtName={district.districtName}
-              ></SingleDistrict>
-            ))}
-          </ul>
-        </div>
-      )}
+        {/* If page is not loading and at least one district is present, list off district(s) */}
+        {!isLoading && allDistricts.length > 0 && (
+          <div className="district-container">
+            <ul className="district-list">
+              {allDistricts.map((district) => (
+                <SingleDistrict
+                  key={district._id}
+                  districtNumber={district.districtNumber}
+                  districtName={district.districtName}
+                ></SingleDistrict>
+              ))}
+            </ul>
+          </div>
+        )}
 
-      {/* If page isn't loading but there are no districts, also show loading spinner (forever) */}
-      {!isLoading && allDistricts.length === 0 && (
-        <div>
-          {" "}
-          <p>NO DISTRICTS </p>
-          <LoadingSpinner />
-        </div>
-      )}
-    </div>
+        {/* If page isn't loading but there are no districts, also show loading spinner (forever) */}
+        {!isLoading && allDistricts.length === 0 && (
+          <div>
+            {" "}
+            <p>NO DISTRICTS </p>
+            <LoadingSpinner />
+          </div>
+        )}
+      </motion.div>
+    </html>
   );
 };
 

@@ -15,9 +15,9 @@ const BoardMemberList = (props) => {
     const fetchAllBoardMembers = async () => {
       try {
         const responseAllMembers = await sendRequest(
-          `${process.env.REACT_APP_BACKEND_URL}/board/all/${props.districtNumber}`
+          `${process.env.REACT_APP_BACKEND_URL}/board/all/${props.districtNumber}` // api url
         );
-        setMemberList(responseAllMembers.allBoardMembers);
+        setMemberList(responseAllMembers.allBoardMembers); // set array to be response
         console.log("GET ALL MEMBERS SUCCESSFUL");
       } catch (err) {
         console.log("UNSUCCESSFUL GET FOR ALL MEMBERS");
@@ -31,9 +31,9 @@ const BoardMemberList = (props) => {
       {/* Error modal if error is encountered */}
       <ErrorModal error={error} onClear={clearError} />
 
-      {/* Displays all members */}
       {!isLoading && memberList.length > 0 && (
         <div className="member-list-container">
+          {/* Iterates through list of all members and prints out name, role, and home district */}
           {memberList.map((member) => (
             <div key={member._id} className="member-item">
               <h3>

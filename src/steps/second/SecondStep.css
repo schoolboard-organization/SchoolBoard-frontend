@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.zipcode-text{
+    display: flex;
+    padding-top: 260px;
+}
+.two-content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: scale(0.90);
+}
+.typing-animation{
+    display: flexbox;
+    padding-top: 30px;
+    padding-left: 200px;
+    font-weight: bold;
+}
+
+.zipcode-input {
+    display: flex;
+    justify-content: center; 
+    align-items: center;     
+    height: 100vh;          
+  }
