@@ -5,15 +5,16 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import FirstStepForm from "./FirstStepForm";
 import FirstStepAnimatedWords from "./FirstStepAnimatedWords";
+import SweetAlert from "../../shared/components/UIElements/SweetAlert";
+import { useNavigate } from "react-router-dom";
 import "./FirstStep.css";
-// import { useNavigate } from "react-router-dom";
 
 /**
  * @description Front page, allows user to login, sign up or continue as guest
  */
 const FirstStep = () => {
   // used to reroute user
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   // from sweetalert2 import, used for error modal
   const MySwal = withReactContent(Swal);
@@ -26,11 +27,13 @@ const FirstStep = () => {
    * @loginState : to keep track of login or sign up form state
    * @emailError : to keep track of taken email error
    * @formData : to keep track of data entered in for email and password
+   * @successfulLoginState : 0 = neutral, 1 = positive, 2 = negative
    */
   const [textColor, setTextColor] = useState("oklch(var(--a))");
   const [loginState, setLoginState] = useState(true);
   const [emailError, setEmailError] = useState(false);
-  const [successfulLoginState, setSuccessfulLoginState] = useState(false);
+  const [successfulSignUpState, setSuccessfulSignUpState] = useState(false);
+  const [successfulLoginState, setSuccessfulLoginState] = useState(0);
   const [formData, setFormData] = useState({
     user_email: "",
     user_password: "",
@@ -54,12 +57,13 @@ const FirstStep = () => {
       ...prevData,
       [name]: value,
     }));
+    console.log("formData Email:", formData.user_email);
+    console.log("formData Password:", formData.user_password);
   };
 
-  // useEffect for error modal when user attempts to sign up with unavailable email
   useEffect(() => {
     if (emailError) {
-      MySwal.fire({
+      SweetAlert({
         width: "320",
         color: "oklch(var(--sc))",
         title: "Oops!",
@@ -67,25 +71,57 @@ const FirstStep = () => {
         icon: "warning",
         customClass: { confirmButton: "custom-confirm-btn" },
         background: "oklch(var(--b1))",
+        showConfirmButton: true,
+        timer: 1500,
         didClose: () => {
           setEmailError(false);
         },
       });
-    } else if (successfulLoginState) {
-      MySwal.fire({
+    }
+    if (successfulSignUpState) {
+      SweetAlert({
         width: "320",
         color: "oklch(var(--sc))",
         title: "Success!",
-        text: "You have been logged in!",
+        text: "Thanks for joining us!",
         icon: "success",
-        customClass: { confirmButton: "custom-confirm-btn" },
         background: "oklch(var(--b1))",
+        showConfirmButton: false,
+        timer: 1500,
         didClose: () => {
-          setSuccessfulLoginState(false);
+          setSuccessfulSignUpState(false);
+          navigate("/second"); // re-routes user to main page
         },
       });
     }
-  }, [emailError, MySwal, successfulLoginState]);
+    if (successfulLoginState === 1) {
+      MySwal.fire({
+        icon: "success",
+        title: "Welcome back!",
+        showConfirmButton: false,
+        timer: 1500,
+        didClose: () => {
+          setSuccessfulLoginState(0);
+          navigate("/second"); // re-routes user to main page
+        },
+      });
+    } else if (successfulLoginState === 2) {
+      MySwal.fire({
+        icon: "error",
+        title: "Invalid Credentials!",
+        text: "Double check email and/or password",
+        didClose: () => {
+          setSuccessfulLoginState(0);
+        },
+      });
+    }
+  }, [
+    emailError,
+    successfulSignUpState,
+    successfulLoginState,
+    navigate,
+    MySwal,
+  ]);
 
   // loginHandler, calls api to sign up / login user depending on state
   const loginHandler = async (event) => {
@@ -103,7 +139,7 @@ const FirstStep = () => {
           }
         );
         console.log("SUCCESSFUL SIGNUP");
-        // navigate("/first"); // re-routes user to main page
+        setSuccessfulSignUpState(true);
       } catch (err) {
         setEmailError(true);
       }
@@ -119,10 +155,10 @@ const FirstStep = () => {
           }
         );
         console.log("SUCCESSFUL LOGIN");
-        setSuccessfulLoginState(true);
-        // navigate("/first"); // re-routes user to main page
+        setSuccessfulLoginState(1);
       } catch (err) {
-        setEmailError(true);
+        console.log("INVALID USER CREDS");
+        setSuccessfulLoginState(2);
       }
     }
   };
@@ -133,7 +169,7 @@ const FirstStep = () => {
       data-theme="autumn"
       initial={{ opacity: 1 }}
       animate={{ opacity: 1, transition: { duration: 1 } }}
-      exit={{ opacity: 0, transition: { duration: 1.5 } }}
+      exit={{ opacity: 0, transition: { duration: 1 } }}
     >
       <React.Fragment>
         <div
