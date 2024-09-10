@@ -1,5 +1,6 @@
 import React from "react";
 import SecondStepForm from "./SecondStepForm";
+import SecondStepBackButton from "./SecondStepBackButton";
 import { motion } from "framer-motion";
 import "./SecondStep.css";
 const SecondStep = () => {
@@ -9,7 +10,7 @@ const SecondStep = () => {
       data-theme="autumn"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transition: { duration: 1 } }}
-      exit={{ opacity: 0, transition: { duration: 1.5 } }}
+      exit={{ opacity: 0, transition: { duration: 1 } }}
     >
       <React.Fragment>
         <div
@@ -18,10 +19,13 @@ const SecondStep = () => {
             transform: "scale(1.0)",
           }}
         >
+          <button className="absolute top-0 left-0 btn btn-square ml-4 mt-3">
+            <SecondStepBackButton className="h-6 w-6" />
+          </button>
           <SecondStepForm
             className="mr-16"
             text="ZIP Code"
-            placeHolderText={"12345"}
+            placeHolderText={"12345 "}
             theme="bumblebee"
           />
           <div className="divider divider-primary lg:divider-horizontal font-bold mx-8">

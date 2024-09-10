@@ -8,19 +8,21 @@ function SecondStepForm(props) {
       <form className="card-body">
         <div className="form-control justify-content items-center">
           <label className="label">
-            <span className="text-5xl">{props.text}</span>
+            <span className="text-5xl" style={{ color: "oklch(var(--ac))" }}>
+              {props.text}
+            </span>
           </label>
           <div className="mt-4">
             <input
               type="text"
               placeholder={`${props.placeHolderText}`}
-              className="input input-bordered"
+              className="input input-bordered input-accent"
               required
             />
           </div>
         </div>
         <div className="form-control justify-content items-center mt-2 mb-1">
-          <button className="btn btn-primary">Search</button>
+          <button className="btn btn-active btn-secondary">Search</button>
         </div>
       </form>
     </div>
