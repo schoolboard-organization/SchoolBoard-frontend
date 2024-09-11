@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import * as motion from "framer-motion/client";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
 import FirstStepForm from "./FirstStepForm";
 import FirstStepAnimatedWords from "./FirstStepAnimatedWords";
 import SweetAlert from "../../shared/components/UIElements/SweetAlert";
@@ -16,9 +14,6 @@ const FirstStep = () => {
   // used to reroute user
   const navigate = useNavigate();
 
-  // from sweetalert2 import, used for error modal
-  const MySwal = withReactContent(Swal);
-
   // custom hook for http requests
   const { isLoading, sendRequest } = useHttpClient();
 
@@ -27,7 +22,7 @@ const FirstStep = () => {
    * @loginState : to keep track of login or sign up form state
    * @emailError : to keep track of taken email error
    * @formData : to keep track of data entered in for email and password
-   * @successfulLoginState : 0 = neutral, 1 = positive, 2 = negative
+   * @successfulLoginState : 0 = neutral state, 1 = successful login, 2 = failed login
    */
   const [textColor, setTextColor] = useState("oklch(var(--a))");
   const [loginState, setLoginState] = useState(true);
@@ -57,11 +52,10 @@ const FirstStep = () => {
       ...prevData,
       [name]: value,
     }));
-    console.log("formData Email:", formData.user_email);
-    console.log("formData Password:", formData.user_password);
   };
 
   useEffect(() => {
+    // ============ Error for signing up with invalid email ============
     if (emailError) {
       SweetAlert({
         width: "320",
@@ -70,14 +64,13 @@ const FirstStep = () => {
         text: "That email is already associated with an account!",
         icon: "warning",
         customClass: { confirmButton: "custom-confirm-btn" },
-        background: "oklch(var(--b1))",
         showConfirmButton: true,
-        timer: 1500,
         didClose: () => {
           setEmailError(false);
         },
       });
     }
+    // ============ Success notification for valid sign up ============
     if (successfulSignUpState) {
       SweetAlert({
         width: "320",
@@ -85,17 +78,17 @@ const FirstStep = () => {
         title: "Success!",
         text: "Thanks for joining us!",
         icon: "success",
-        background: "oklch(var(--b1))",
         showConfirmButton: false,
         timer: 1500,
         didClose: () => {
           setSuccessfulSignUpState(false);
-          navigate("/second"); // re-routes user to main page
+          navigate("/second"); // re-routes user to next page
         },
       });
     }
+    // ============ Welcome back message fo successful login ============
     if (successfulLoginState === 1) {
-      MySwal.fire({
+      SweetAlert({
         icon: "success",
         title: "Welcome back!",
         showConfirmButton: false,
@@ -105,8 +98,10 @@ const FirstStep = () => {
           navigate("/second"); // re-routes user to main page
         },
       });
-    } else if (successfulLoginState === 2) {
-      MySwal.fire({
+    }
+    // ============ Error message for invalid login attempt ============
+    if (successfulLoginState === 2) {
+      SweetAlert({
         icon: "error",
         title: "Invalid Credentials!",
         text: "Double check email and/or password",
@@ -115,13 +110,7 @@ const FirstStep = () => {
         },
       });
     }
-  }, [
-    emailError,
-    successfulSignUpState,
-    successfulLoginState,
-    navigate,
-    MySwal,
-  ]);
+  }, [emailError, successfulSignUpState, successfulLoginState, navigate]);
 
   // loginHandler, calls api to sign up / login user depending on state
   const loginHandler = async (event) => {
@@ -131,7 +120,7 @@ const FirstStep = () => {
     if (!loginState) {
       try {
         await sendRequest(
-          `http://localhost:5000/api/user/`,
+          `${process.env.REACT_APP_BACKEND_URL}/user/`,
           "POST",
           JSON.stringify(formData),
           {
@@ -147,7 +136,7 @@ const FirstStep = () => {
       // ==== lOGIN ====
       try {
         await sendRequest(
-          `http://localhost:5000/api/user/login`,
+          `${process.env.REACT_APP_BACKEND_URL}/user/login`,
           "POST",
           JSON.stringify(formData),
           {
@@ -164,6 +153,7 @@ const FirstStep = () => {
   };
 
   return (
+    // Motion Div for fade in and out
     <motion.div
       className="entire-page bg-neutral-content"
       data-theme="autumn"
@@ -176,10 +166,11 @@ const FirstStep = () => {
           className="hero bg-neutral-content min-h-screen"
           data-theme="autumn"
         >
+          {/* Motion Div for color transition for sign up / log in button */}
           <motion.div
-            initial={{ backgroundColor: "#E5E0DC" }}
+            initial={{ backgroundColor: "#f5eae1" }}
             animate={{
-              backgroundColor: loginState ? "#E5E0DC" : "#EDD0D0",
+              backgroundColor: loginState ? "#f5eae1" : "#dbe9e4",
             }}
             transition={{ ease: "linear", duration: 2 }}
             style={{ width: "100vw", height: "100vh" }}
