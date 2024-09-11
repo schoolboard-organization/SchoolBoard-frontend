@@ -5,7 +5,7 @@ function SecondStepForm(props) {
       data-theme={props.theme}
       className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl"
     >
-      <form className="card-body">
+      <form className="card-body" onSubmit={props.formHandler}>
         <div className="form-control justify-content items-center">
           <label className="label">
             <span className="text-5xl" style={{ color: "oklch(var(--ac))" }}>
